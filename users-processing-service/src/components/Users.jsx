@@ -27,14 +27,18 @@ const Users = () => {
 
     const [users, setUsers] = useState([]);
 
-    const API_URL = 'https://6803vmt1db.execute-api.us-east-1.amazonaws.com/Dev';
+    const API_URL = process.env.REACT_APP_API_URL;
+    // console.log(API_URL)
 
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get(API_URL);
+            console.log(response)
+            console.log(JSON.parse(response.data.body).Items)
             setUsers(JSON.parse(response.data.body).Items);
         }
         getData();
+        console.log(users)
     }, [])
 
     const removeEntry = (id) => {
@@ -61,13 +65,13 @@ const Users = () => {
                     <TableBody>
                         {
                             users.map(user => (
-                                <TableRow key={user.id}>
-                                    <TableCell>{user.id}</TableCell>
-                                    <TableCell>{user.name}</TableCell>
-                                    <TableCell>{user.email}</TableCell>
-                                    <TableCell>{user.phone}</TableCell>
-                                    <TableCell>{user.salary}</TableCell>
-                                    <TableCell>{user.age}</TableCell>
+                                <TableRow key={user.id.N}>
+                                    <TableCell>{user.id.N}</TableCell>
+                                    <TableCell>{user.name.S}</TableCell>
+                                    <TableCell>{user.email.S}</TableCell>
+                                    <TableCell>{user.phone.N}</TableCell>
+                                    <TableCell>{user.salary.N}</TableCell>
+                                    <TableCell>{user.age.N}</TableCell>
                                     <TableCell><Button variant="contained" color="error" onClick={() => removeEntry(user.id)}>Remove</Button></TableCell>
                                 </TableRow>
                             ))
